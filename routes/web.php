@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\DashboardSuperAdmin;
+use App\Http\Controllers\PerusahaanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::prefix('/dashboard-super-admin')->group(function() {
+    Route::get('',[DashboardSuperAdmin::class,'index'])->name ('dashboardSuperAdmin');
+    
+    Route::controller(PerusahaanController::class)
+    ->prefix('/perusahaan')
+    ->group(function() {    
+        Route::get("/", 'index')->name('dataPerusahaan');
+    });
 });
